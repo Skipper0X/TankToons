@@ -24,7 +24,6 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category= "Components", meta=(AllowPrivateAccess = true))
 	USceneComponent* ProjSpawnPoint;
-	
 
 public:
 	// Sets default values for this pawn's properties
