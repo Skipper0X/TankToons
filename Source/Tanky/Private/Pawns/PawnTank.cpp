@@ -59,3 +59,8 @@ void APawnTank::Rotate()
 {
 	AddActorLocalRotation(RotateDirection, true);
 }
+
+void APawnTank::OnDestroy()
+{
+	Super::OnDestroy();
+}

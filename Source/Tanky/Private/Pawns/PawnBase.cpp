@@ -21,3 +21,20 @@ APawnBase::APawnBase()
 	ProjSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Projectile Spawn Point"));
 	ProjSpawnPoint->SetupAttachment(TurretMesh);
 }
+
+void APawnBase::Fire() const
+{
+	UE_LOG(LogTemp, Warning, TEXT("PawnBase :: Fire();"))
+}
+
+void APawnBase::RotateTurret(const FVector LookAt) const
+{
+	const FVector TurretInitLocation = TurretMesh->GetComponentLocation();
+	const FVector LookAtX = FVector(LookAt.X, LookAt.Y, TurretMesh->GetComponentLocation().Z);
+	const FRotator TurretRotation = FVector(LookAtX - TurretInitLocation).Rotation();
+	TurretMesh->SetWorldRotation(TurretRotation);
+}
+
+void APawnBase::OnDestroy()
+{
+}
