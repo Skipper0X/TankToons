@@ -28,7 +28,7 @@ public:
 	APawnBase();
 
 protected:
-	void Fire() const;
-	void RotateTurret(const FVector LookAt) const;
+	virtual void Fire();
+	virtual void RotateTurret(const FVector LookAt);
 	virtual void OnDestroy();
 };

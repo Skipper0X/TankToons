@@ -16,15 +16,17 @@ class TANKY_API APawnTurret : public APawnBase
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta=(AllowPrivateAccess = true))
 	float FireRate = 2.0f;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta=(AllowPrivateAccess = true))
 	float FireRange = 500.0f;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat", meta=(AllowPrivateAccess = true))
 	APawnTank* PlayerRef;
 
 	FTimerHandle FireRateTimerHandle;
 
+	auto CheckFireCondition() -> void;
 	auto IsPlayerInRange() const -> bool;
-	auto CheckFireCondition() const -> void;
 	auto GetDistanceToPlayer() const -> float;
 
 public:

@@ -27,6 +27,7 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement", meta = (AllowPrivateAccess = true))
 	float RotateSpeed = 100.0f;
 
+	APlayerController* PlayerControllerRef;
 	FVector MoveDirection;
 	FQuat RotateDirection;
 
@@ -35,6 +36,7 @@ private:
 
 	void Move();
 	void Rotate();
+	void RotateTurretToCursor();
 
 public:
 	APawnTank();

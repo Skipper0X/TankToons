@@ -26,7 +26,7 @@ void APawnTurret::Tick(const float DeltaTime)
 	RotateTurret(PlayerRef->GetActorLocation());
 }
 
-auto APawnTurret::CheckFireCondition() const -> void
+auto APawnTurret::CheckFireCondition() -> void
 {
 	// 0: If Player Is Not Valid Or Alive , Just BAIL!!
 	if (PlayerRef == nullptr) return;

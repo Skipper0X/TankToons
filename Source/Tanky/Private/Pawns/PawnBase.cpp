@@ -22,12 +22,12 @@ APawnBase::APawnBase()
 	ProjSpawnPoint->SetupAttachment(TurretMesh);
 }
 
-void APawnBase::Fire() const
+void APawnBase::Fire()
 {
 	UE_LOG(LogTemp, Warning, TEXT("PawnBase :: Fire();"))
 }
 
-void APawnBase::RotateTurret(const FVector LookAt) const
+void APawnBase::RotateTurret(const FVector LookAt)
 {
 	const FVector TurretInitLocation = TurretMesh->GetComponentLocation();
 	const FVector LookAtX = FVector(LookAt.X, LookAt.Y, TurretMesh->GetComponentLocation().Z);

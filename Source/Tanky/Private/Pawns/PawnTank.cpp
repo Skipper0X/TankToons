@@ -15,6 +15,7 @@ APawnTank::APawnTank()
 void APawnTank::BeginPlay()
 {
 	Super::BeginPlay();
+	PlayerControllerRef = Cast<APlayerController>(GetController());
 }
 
 // Called every frame
@@ -24,6 +25,7 @@ void APawnTank::Tick(const float DeltaTime)
 
 	Rotate();
 	Move();
+	RotateTurretToCursor();
 }
 
 // Called to bind functionality to input
@@ -31,11 +33,13 @@ void APawnTank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	const FName FireBinding = "Fire";
 	const FName TurnBinding = "Turn";
 	const FName MoveForwardBinding = "MoveForward";
 
 	PlayerInputComponent->BindAxis(TurnBinding, this, &APawnTank::ProcessRotationInput);
 	PlayerInputComponent->BindAxis(MoveForwardBinding, this, &APawnTank::ProcessMoveInput);
+	PlayerInputComponent->BindAction(FireBinding, IE_Pressed, this, &APawnTank::Fire);
 }
 
 void APawnTank::ProcessMoveInput(const float Value)
@@ -58,6 +62,15 @@ void APawnTank::Move()
 void APawnTank::Rotate()
 {
 	AddActorLocalRotation(RotateDirection, true);
+}
+
+void APawnTank::RotateTurretToCursor()
+{
+	if (PlayerControllerRef == nullptr) return;
+
+	FHitResult TraceHit;
+	PlayerControllerRef->GetHitResultUnderCursor(ECC_Visibility, false, TraceHit);
+	RotateTurret(TraceHit.ImpactPoint);
 }
 
 void APawnTank::OnDestroy()
