@@ -18,7 +18,7 @@ void APawnTank::BeginPlay()
 }
 
 // Called every frame
-void APawnTank::Tick(float DeltaTime)
+void APawnTank::Tick(const float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
