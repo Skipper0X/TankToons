@@ -24,7 +24,13 @@ APawnBase::APawnBase()
 
 void APawnBase::Fire()
 {
-	UE_LOG(LogTemp, Warning, TEXT("PawnBase :: Fire();"))
+	if (ProjectileClass == nullptr) return;
+
+	const FVector SpawnPos = ProjSpawnPoint->GetComponentLocation();
+	const FRotator SpawnRot = ProjSpawnPoint->GetComponentRotation();
+
+	const auto Projectile = GetWorld()->SpawnActor<AProjectileBase>(ProjectileClass, SpawnPos, SpawnRot);
+	Projectile->SetOwner(this);
 }
 
 void APawnBase::RotateTurret(const FVector LookAt)
