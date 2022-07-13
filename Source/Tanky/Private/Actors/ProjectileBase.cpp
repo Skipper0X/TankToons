@@ -26,6 +26,7 @@ AProjectileBase::AProjectileBase()
 void AProjectileBase::BeginPlay()
 {
 	Super::BeginPlay();
+	UGameplayStatics::PlaySoundAtLocation(this, LaunchSound, GetActorLocation());
 }
 
 void AProjectileBase::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent,
@@ -39,6 +40,8 @@ void AProjectileBase::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActo
 		AController* Controller = CurrentOwner->GetInstigatorController();
 		UGameplayStatics::ApplyDamage(OtherActor, Damage, Controller, this, DamageType);
 		UGameplayStatics::SpawnEmitterAtLocation(this, HitVfx, GetActorLocation());
+		UGameplayStatics::PlaySoundAtLocation(this, HitSound, GetActorLocation());
+		UGameplayStatics::GetPlayerController(this, 0)->ClientStartCameraShake(HitCameraShake);
 		Destroy();
 	}
 }

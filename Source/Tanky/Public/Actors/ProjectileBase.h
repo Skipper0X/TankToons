@@ -28,6 +28,12 @@ private:
 	float Damage = 50.0f;
 	UPROPERTY(EditAnywhere, Category= "Effects")
 	UParticleSystem* HitVfx;
+	UPROPERTY(EditAnywhere, Category= "Effects")
+	USoundBase* HitSound;
+	UPROPERTY(EditAnywhere, Category= "Effects")
+	USoundBase* LaunchSound;
+	UPROPERTY(EditAnywhere, Category= "Effects")
+	TSubclassOf<UCameraShakeBase> HitCameraShake;
 
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent,

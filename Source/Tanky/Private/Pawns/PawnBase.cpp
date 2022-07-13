@@ -43,4 +43,6 @@ void APawnBase::RotateTurret(const FVector LookAt)
 void APawnBase::OnDestroy()
 {
 	UGameplayStatics::SpawnEmitterAtLocation(this, DestroyVfx, GetActorLocation());
+	UGameplayStatics::PlaySoundAtLocation(this, DestroySound, GetActorLocation());
+	UGameplayStatics::GetPlayerController(this, 0)->ClientStartCameraShake(DestroyCameraShake);
 }
