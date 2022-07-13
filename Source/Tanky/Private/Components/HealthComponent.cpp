@@ -8,13 +8,12 @@ UHealthComponent::UHealthComponent()
 	PrimaryComponentTick.bCanEverTick = false;
 }
 
-
 // Called when the game starts
 void UHealthComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	CurrentHp = DefaultHp;
+	SetCurrentHp(DefaultHp);
 	GameModeRef = Cast<ATankGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
 
 	GetOwner()->OnTakeAnyDamage.AddDynamic(this, &UHealthComponent::OnTakeDamage);
@@ -26,10 +25,9 @@ void UHealthComponent::OnTakeDamage(AActor* DamageReceiverActor, const float Dam
 	if (Damage == 0) return;
 	if (CurrentHp <= 0) return;
 
-	CurrentHp = FMath::Clamp(CurrentHp - Damage, 0.0f, DefaultHp);
+	SetCurrentHp(FMath::Clamp(CurrentHp - Damage, 0.0f, DefaultHp));
 
-	if (CurrentHp <= 0.0f)
-	{
-		GameModeRef->OnActorDestroy(GetOwner());
-	}
+	if (CurrentHp <= 0.0f) GameModeRef->OnActorDestroy(GetOwner());
 }
+
+auto UHealthComponent::SetCurrentHp(const float Hp) -> void { CurrentHp = Hp; }

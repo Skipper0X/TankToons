@@ -15,11 +15,10 @@ private:
 	UPROPERTY(EditAnywhere)
 	float DefaultHp = 100.0f;
 
-	UPROPERTY(VisibleAnywhere)
+	float CurrentHp = 0.0f;
 	ATankGameModeBase* GameModeRef;
 
-	float CurrentHp = 0.0f;
-
+	auto SetCurrentHp(float Hp) -> void;
 public:
 	// Sets default values for this component's properties
 	UHealthComponent();

@@ -31,9 +31,10 @@ private:
 
 public:
 	APawnTurret();
+
 	virtual void Tick(float DeltaTime) override;
+	virtual void OnDestroy() override;
 
 protected:
 	virtual void BeginPlay() override;
-	virtual void OnDestroy() override;
 };
