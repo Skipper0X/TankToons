@@ -1,25 +1,24 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Controllers/PlayerControllerBase.h"
 #include "GameFramework/GameModeBase.h"
 #include "Pawns/PawnTank.h"
 #include "TankGameModeBase.generated.h"
 
-/**
- * 
- */
+
 UCLASS()
 class TANKY_API ATankGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 
 private:
-	APawnTank* PlayerTankRef = nullptr;
 	uint16_t TurretsCount = 0;
+	APawnTank* PlayerTankRef = nullptr;
+	APlayerControllerBase* PlayerControllerRef = nullptr;
 
 	auto OnStartGame() -> void;
 	auto OnGameOver(bool PlayerWon) -> void;
-
 public:
 	auto OnActorDestroy(AActor* Actor) -> void;
 

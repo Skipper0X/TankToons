@@ -54,15 +54,11 @@ void APawnTank::ProcessRotationInput(const float Value)
 	RotateDirection = FQuat(Rotation);
 }
 
-void APawnTank::Move()
-{
-	AddActorLocalOffset(MoveDirection, true);
-}
+auto APawnTank::GetIsPlayerAlive() const -> bool { return IsPlayerAlive; }
 
-void APawnTank::Rotate()
-{
-	AddActorLocalRotation(RotateDirection, true);
-}
+void APawnTank::Move() { AddActorLocalOffset(MoveDirection, true); }
+
+void APawnTank::Rotate() { AddActorLocalRotation(RotateDirection, true); }
 
 void APawnTank::RotateTurretToCursor()
 {
@@ -76,4 +72,8 @@ void APawnTank::RotateTurretToCursor()
 void APawnTank::OnDestroy()
 {
 	Super::OnDestroy();
+	IsPlayerAlive = false;
+
+	SetActorHiddenInGame(true);
+	SetActorTickEnabled(false);
 }

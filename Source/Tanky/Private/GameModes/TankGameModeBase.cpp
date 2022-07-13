@@ -12,13 +12,29 @@ void ATankGameModeBase::BeginPlay()
 
 	TurretsCount = OutActors.Num();
 	PlayerTankRef = Cast<APawnTank>(UGameplayStatics::GetPlayerPawn(this, 0));
+	PlayerControllerRef = Cast<APlayerControllerBase>(UGameplayStatics::GetPlayerController(this, 0));
 
 	OnStartGame();
 }
 
-auto ATankGameModeBase::OnStartGame() -> void { StartGame(); }
+auto ATankGameModeBase::OnStartGame() -> void
+{
+	// 0: Start The Game Push Widget On ViewPort & Start Countdown....
+	StartGame();
 
-auto ATankGameModeBase::OnGameOver(const bool PlayerWon) -> void { GameOver(PlayerWon); }
+	// 1: Disable Player Input Until The Spawn Delay Is Passed....
+	PlayerControllerRef->SetPlayerState(false);
+	FTimerHandle PlayerTimerHandle;
+	const FTimerDelegate PlayerStateEnableDelegate = FTimerDelegate::CreateUObject(PlayerControllerRef,
+		&APlayerControllerBase::SetPlayerState,
+		true);
+	GetWorld()->GetTimerManager().SetTimer(PlayerTimerHandle, PlayerStateEnableDelegate, StartDelay, false);
+}
+
+auto ATankGameModeBase::OnGameOver(const bool PlayerWon) -> void
+{
+	GameOver(PlayerWon);
+}
 
 auto ATankGameModeBase::OnActorDestroy(AActor* Actor) -> void
 {
@@ -26,6 +42,7 @@ auto ATankGameModeBase::OnActorDestroy(AActor* Actor) -> void
 	if (PlayerTankRef == Actor)
 	{
 		PlayerTankRef->OnDestroy();
+		PlayerControllerRef->SetPlayerState(false);
 		OnGameOver(false);
 		return;
 	}
