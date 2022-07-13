@@ -21,6 +21,7 @@ void APawnTurret::Tick(const float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	if (PlayerRef == nullptr) return;
+	if (PlayerRef->GetIsPlayerAlive() == false) return;
 	if (IsPlayerInRange() == false) return;
 
 	RotateTurret(PlayerRef->GetActorLocation());
@@ -30,6 +31,7 @@ auto APawnTurret::CheckFireCondition() -> void
 {
 	// 0: If Player Is Not Valid Or Alive , Just BAIL!!
 	if (PlayerRef == nullptr) return;
+	if (PlayerRef->GetIsPlayerAlive() == false) return;
 
 	// 1: If Player Is In Range Then FIRE!
 	if (IsPlayerInRange()) Fire();

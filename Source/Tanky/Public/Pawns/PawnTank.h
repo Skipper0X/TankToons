@@ -15,21 +15,21 @@ class TANKY_API APawnTank : public APawnBase
 	GENERATED_BODY()
 
 private:
+	// -> COMPONENTS.....
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = true))
 	USpringArmComponent* SpringArm;
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = true))
 	UCameraComponent* Camera;
-
+	// -> Configs.....
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement", meta = (AllowPrivateAccess = true))
 	float MoveSpeed = 100.0f;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement", meta = (AllowPrivateAccess = true))
 	float RotateSpeed = 100.0f;
 
-	APlayerController* PlayerControllerRef;
 	FVector MoveDirection;
 	FQuat RotateDirection;
+	bool IsPlayerAlive = true;
+	APlayerController* PlayerControllerRef = nullptr;
 
 	void ProcessMoveInput(float Value);
 	void ProcessRotationInput(float Value);
@@ -48,6 +48,8 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	virtual void OnDestroy() override;
+
+	auto GetIsPlayerAlive() const -> bool;
 
 protected:
 	// Called when the game starts or when spawned

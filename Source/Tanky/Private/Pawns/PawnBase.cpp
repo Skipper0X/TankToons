@@ -1,7 +1,6 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "Pawns/PawnBase.h"
+
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 APawnBase::APawnBase()
@@ -43,4 +42,5 @@ void APawnBase::RotateTurret(const FVector LookAt)
 
 void APawnBase::OnDestroy()
 {
+	UGameplayStatics::SpawnEmitterAtLocation(this, DestroyVfx, GetActorLocation());
 }

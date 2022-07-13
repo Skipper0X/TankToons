@@ -12,6 +12,9 @@ AProjectileBase::AProjectileBase()
 	ProjectileMesh->OnComponentHit.AddDynamic(this, &AProjectileBase::OnHit);
 	SetRootComponent(ProjectileMesh);
 
+	ProjectileTrailVfx = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("Trail Vfx"));
+	ProjectileTrailVfx->SetupAttachment(RootComponent);
+
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Movement"));
 	ProjectileMovement->InitialSpeed = MoveSpeed;
 	ProjectileMovement->MaxSpeed = MoveSpeed;
@@ -35,7 +38,7 @@ void AProjectileBase::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActo
 	{
 		AController* Controller = CurrentOwner->GetInstigatorController();
 		UGameplayStatics::ApplyDamage(OtherActor, Damage, Controller, this, DamageType);
+		UGameplayStatics::SpawnEmitterAtLocation(this, HitVfx, GetActorLocation());
+		Destroy();
 	}
-
-	Destroy();
 }

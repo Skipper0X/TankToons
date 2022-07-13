@@ -25,6 +25,8 @@ private:
 	// -> VARIABLES & REFERENCES...
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category= "Projectile Type", meta=(AllowPrivateAccess = true))
 	TSubclassOf<AProjectileBase> ProjectileClass;
+	UPROPERTY(EditAnywhere, Category= "Effects")
+	UParticleSystem* DestroyVfx;
 
 public:
 	// Sets default values for this pawn's properties
